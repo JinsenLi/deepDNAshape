@@ -1,0 +1,2 @@
+model_checkpoint_path: "MGW-FL"
+all_model_checkpoint_paths: "MGW-FL"
