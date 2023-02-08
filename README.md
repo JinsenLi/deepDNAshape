@@ -10,6 +10,7 @@ Prerequsite: `tensorflow >= 2.0` `numpy`
 ### Download and install through pip
 ```
 git clone https://github.com/jinsenli/deepdnashape/
+cd deepdnashape
 pip install .
 ```
 
