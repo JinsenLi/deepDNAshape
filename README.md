@@ -14,10 +14,13 @@ unzip deepDNAshape.zip
 cd deepdnashape
 pip install .
 ```
+Installation time should be minimal depending on the time to install the prerequsites. 
 
 ## Quickstart
 
-Pre-trained models are provided with the package. You don't need to train anything to predict DNA shape features!
+Pre-trained models are provided with the package. You don't need to train anything to predict DNA shape features! If you want to use the model to train other data, please go to "scripts" folder.
+
+Run time of the program depends on the amount of inputs. For a single sequence, run time should be a couple seconds. If you are processing large data, please consider using `--file` option which will expedite the process. 
 
 * `deepDNAshape -h` - Print help message and exit.
 * `deepDNAshape --seq [SEQ] --feature [FEATURE]` - Specify the DNA shape feature and the sequence to be predicted. DNA shape features include MGW, Shear, Stretch, Stagger, Buckle, ProT, Opening, Shift, Slide, Rise, Tilt, Roll, HelT. Add "-FL" to the feature name to predict DNA shape fluctuations, e.g. MGW-FL.
