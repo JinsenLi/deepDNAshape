@@ -70,3 +70,6 @@ To choose output file:
 
 Use `deepDNAshape --file [FILE] --output [OUTPUTFILE]` to specify an output file to store the predictions instead of stdout.
 
+## Windows usage
+
+For users trying to use the package in Windows environment. Please download `deepDNAshape` in the `bin/` directory to local after installing the package and change the run command `deepDNAshape` to `python deepDNAshape ...`
