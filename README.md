@@ -9,9 +9,10 @@ It also includes all the components of Deep DNAshape. You may incoorporate Deep 
 Prerequsite: `tensorflow >= 2.0` `numpy`
 ### Download and install through pip
 ```
+mkdir deepDNAshape
+cd deepdnashape
 wget https://github.com/JinsenLi/deepDNAshape/blob/main/release/deepDNAshape.zip
 unzip deepDNAshape.zip
-cd deepdnashape
 pip install .
 ```
 Installation time should be minimal depending on the time to install the prerequsites. 
