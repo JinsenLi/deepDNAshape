@@ -28,7 +28,7 @@ if __name__ == "__main__":
         if args.output == "stdout":
             fout = sys.stdout
         else:
-            fout = open(sys.output, "w")
+            fout = open(args.output, "w")
         with open(args.file) as fin:
             seqBatch = []
             for seq in fin:
