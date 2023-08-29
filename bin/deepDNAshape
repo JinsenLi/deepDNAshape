@@ -26,8 +26,10 @@ if __name__ == "__main__":
         print(args.seq + " " + " ".join(prediction))
     elif args.file:
         if args.output == "stdout":
+            usefile = False
             fout = sys.stdout
         else:
+            usefile = True
             fout = open(args.output, "w")
         with open(args.file) as fin:
             seqBatch = []
@@ -43,7 +45,8 @@ if __name__ == "__main__":
                 prediction = myPredictor.predictBatch(args.feature, seqBatch, args.layer)
                 for i, seq in enumerate(seqBatch):
                     fout.write(seq + " " + " ".join(list(map(str, prediction[i]))) + "\n")
-        fout.close()
+        if usefile:
+            fout.close()
     else:
         parser.print_help(sys.stderr)
         sys.exit(1)
