@@ -37,7 +37,6 @@ if __name__ == "__main__":
                 seqBatch.append(seq.strip())
                 if len(seqBatch) == args.batch_size:
                     prediction = myPredictor.predictBatch(args.feature, seqBatch, args.layer)
-                    fout.write(prediction.shape)
                     for i, seq in enumerate(seqBatch):
                         fout.write(seq + " " + " ".join(list(map(str, prediction[i]))) + "\n")
                     seqBatch = []
