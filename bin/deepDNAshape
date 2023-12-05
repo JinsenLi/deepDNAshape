@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-from deepDNAshape import predictor
-
 
 if __name__ == "__main__":
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -20,30 +18,69 @@ if __name__ == "__main__":
     parser.add_argument("--gpu", dest = "gpu", help = "Use --gpu if you have available GPUs, and are predicting a file, make sure CUDA, CuDNN are installed correctly.")
     args = parser.parse_args()
 
+    from deepDNAshape import predictor
     myPredictor = predictor.predictor()
     if args.seq:
         prediction = list(map(str, myPredictor.predict(args.feature, args.seq, args.layer)))
         print(args.seq + " " + " ".join(prediction))
     elif args.file:
+        outputfa = False
         if args.output == "stdout":
             usefile = False
             fout = sys.stdout
         else:
             usefile = True
+            if args.output.endswith(".fa") or args.output.endswith(".fasta"):
+                outputfa = True
             fout = open(args.output, "w")
-        with open(args.file) as fin:
-            seqBatch = []
-            for seq in fin:
-                seqBatch.append(seq.strip())
-                if len(seqBatch) == args.batch_size:
-                    prediction = myPredictor.predictBatch(args.feature, seqBatch, args.layer)
-                    for i, seq in enumerate(seqBatch):
-                        fout.write(seq + " " + " ".join(list(map(str, prediction[i]))) + "\n")
-                    seqBatch = []
-            if seqBatch != []:
+            
+        data = []
+        if args.file.endswith(".fa") or args.file.endswith(".fasta"):
+            with open(args.file) as fin:
+                seqname = ""
+                storedSeq = ""
+                for line in fin:
+                    if len(line) > 0:
+                        if line[0] == ">":
+                            if seqname != "":
+                                data.append((seqname, storedSeq))
+                            seqname = line
+                            storedSeq = ""
+                        else:
+                            storedSeq += line.strip()
+                if storedSeq != "":
+                    data.append((seqname, storedSeq))
+        else:
+            with open(args.file) as fin:
+                index = 0
+                for seq in fin:
+                    data.append((">" + str(index) + "\n", seq.strip()))
+
+        #Predict batch and output
+        seqBatch = []
+        seqnames = []
+        for seqname, seq in data:
+            seqnames.append(seqname)
+            seqBatch.append(seq.strip())
+            if len(seqBatch) == args.batch_size:
                 prediction = myPredictor.predictBatch(args.feature, seqBatch, args.layer)
                 for i, seq in enumerate(seqBatch):
-                    fout.write(seq + " " + " ".join(list(map(str, prediction[i]))) + "\n")
+                    if outputfa:
+                        fout.write(seqnames[i])
+                        fout.write(",".join(list(map(str, prediction[i]))) + "\n")
+                    else:
+                        fout.write(" ".join(list(map(str, prediction[i]))) + "\n")
+                seqBatch = []
+                seqnames = []
+        if seqBatch != []:
+            prediction = myPredictor.predictBatch(args.feature, seqBatch, args.layer)
+            for i, seq in enumerate(seqBatch):
+                if outputfa:
+                    fout.write(seqnames[i])
+                    fout.write(",".join(list(map(str, prediction[i]))) + "\n")
+                else:
+                    fout.write(" ".join(list(map(str, prediction[i]))) + "\n")
+
         if usefile:
             fout.close()
     else:
