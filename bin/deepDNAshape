@@ -25,8 +25,8 @@ if __name__ == "__main__":
     if args.seq:
         prediction = list(map(str, myPredictor.predict(args.feature, args.seq, args.layer)))
         if args.showseq:
-            sys.stdout.write(args.seq)
-        sys.stdout.write(" " + " ".join(prediction) + "\n")
+            sys.stdout.write(args.seq + " ")
+        sys.stdout.write(" ".join(prediction) + "\n")
     elif args.file:
         outputfa = False
         if args.output == "stdout":
