@@ -15,11 +15,13 @@ if __name__ == "__main__":
     parser.add_argument("--layer", default=4, dest = "layer", type = int, help = "Select output layer number (0 to 7). Choose bigger number if you want to evaluate longer range effects from flanking regions. Don't change this parameter if you are not sure. [Default is 4].")
     parser.add_argument("--output", dest = "output", default = "stdout", help = "Specify where the predictions will be written to. [Defualt is stdout]")
     parser.add_argument("--batch_size", dest = "batch_size", default=2048, type = int, help = "If --file is provided, use this parameter to adjust parallel computing maximum. [Default is 2048] use higher values to speed up your prediction subject to your CPU/mem resources.")
-    parser.add_argument("--gpu", dest = "gpu", help = "Use --gpu if you have available GPUs, and are predicting a file, make sure CUDA, CuDNN are installed correctly.")
+    parser.add_argument("--gpu", dest = "gpu", action = "store_true", help = "Use --gpu if you have available GPUs, and are predicting a file, make sure CUDA, CuDNN are installed correctly.")
+    parser.add_argument("--showseq", dest = "showseq", action = "store_true", help = "Use --showseq if you want to rewrite the sequence in front of your prediction.")
     args = parser.parse_args()
 
     from deepDNAshape import predictor
-    myPredictor = predictor.predictor()
+    mode = "cpu" if args.gpu else "gpu"
+    myPredictor = predictor.predictor(mode = mode)
     if args.seq:
         prediction = list(map(str, myPredictor.predict(args.feature, args.seq, args.layer)))
         print(args.seq + " " + " ".join(prediction))
@@ -67,8 +69,12 @@ if __name__ == "__main__":
                 for i, seq in enumerate(seqBatch):
                     if outputfa:
                         fout.write(seqnames[i])
+                        if args.showseq:
+                            fout.write(seq)
                         fout.write(",".join(list(map(str, prediction[i]))) + "\n")
                     else:
+                        if args.showseq:
+                            fout.write(seq)
                         fout.write(" ".join(list(map(str, prediction[i]))) + "\n")
                 seqBatch = []
                 seqnames = []
@@ -77,8 +83,12 @@ if __name__ == "__main__":
             for i, seq in enumerate(seqBatch):
                 if outputfa:
                     fout.write(seqnames[i])
+                    if args.showseq:
+                        fout.write(seq)
                     fout.write(",".join(list(map(str, prediction[i]))) + "\n")
                 else:
+                    if args.showseq:
+                        fout.write(seq)
                     fout.write(" ".join(list(map(str, prediction[i]))) + "\n")
 
         if usefile:
