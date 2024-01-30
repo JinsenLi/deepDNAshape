@@ -72,11 +72,11 @@ if __name__ == "__main__":
                     if outputfa:
                         fout.write(seqnames[i])
                         if args.showseq:
-                            fout.write(seq)
+                            fout.write(seq + ",")
                         fout.write(",".join(list(map(str, prediction[i]))) + "\n")
                     else:
                         if args.showseq:
-                            fout.write(seq)
+                            fout.write(seq + " ")
                         fout.write(" ".join(list(map(str, prediction[i]))) + "\n")
                 seqBatch = []
                 seqnames = []
@@ -86,11 +86,11 @@ if __name__ == "__main__":
                 if outputfa:
                     fout.write(seqnames[i])
                     if args.showseq:
-                        fout.write(seq)
+                        fout.write(seq + ",")
                     fout.write(",".join(list(map(str, prediction[i]))) + "\n")
                 else:
                     if args.showseq:
-                        fout.write(seq)
+                        fout.write(seq + " ")
                     fout.write(" ".join(list(map(str, prediction[i]))) + "\n")
 
         if usefile:

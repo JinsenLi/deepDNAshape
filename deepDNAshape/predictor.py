@@ -118,8 +118,8 @@ class predictor:
             rev_predictions = -rev_predictions
         predictions = (predictions + rev_predictions[::-1]) / 2
         predictions = tf.transpose(predictions)
-        if layer and type(layer) is int and 0 <= layer <= 7:
-            predictions = predictions[layer]
+        #if layer and type(layer) is int and 0 <= layer <= 7:
+        predictions = predictions[layer]
         return predictions.numpy()[2:-2]
 
     def predictBatch(self, feature, seqBatch, layer = None):
@@ -147,8 +147,8 @@ class predictor:
         rev_predictions = rev_predictions[:, ::-1, :]
 
         predictions = (predictions + rev_predictions) / 2
-        if layer and type(layer) is int and 0 <= layer <= 7:
-            predictions = predictions[:, 2:-2, layer]
+        #if layer and type(layer) is int and 0 <= layer <= 7:
+        predictions = predictions[:, 2:-2, layer]
         return predictions.numpy()
 
 
