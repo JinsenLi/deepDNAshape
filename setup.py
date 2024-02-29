@@ -9,7 +9,7 @@ setup(
     author_email='jinsenli@usc.edu',
     license='BSD 2-clause',
     packages=['deepDNAshape'],
-    install_requires=['tensorflow>2.0',
+    install_requires=['tensorflow>=2.6.0',
                       'numpy',                     
                       ],
     scripts=['bin/deepDNAshape'],
