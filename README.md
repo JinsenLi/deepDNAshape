@@ -6,7 +6,7 @@ It also includes all the components of Deep DNAshape. You may incoorporate Deep 
 
 ## Installation
 
-Prerequsite: `tensorflow >= 2.0` `numpy`
+Prerequsite: `tensorflow >= 2.6.0` `numpy`
 ### Download and install through pip
 ```
 git clone https://github.com/JinsenLi/deepDNAshape
