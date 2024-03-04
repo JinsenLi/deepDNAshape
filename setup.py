@@ -10,7 +10,7 @@ setup(
     license='BSD 2-clause',
     packages=['deepDNAshape'],
     install_requires=['tensorflow>=2.6.0',
-                      'numpy',                     
+                      'numpy<1.24',                     
                       ],
     scripts=['bin/deepDNAshape'],
     include_package_data=True,
