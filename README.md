@@ -4,9 +4,13 @@ The package includes an executable `deepDNAshape` to predict DNA shape features 
 
 It also includes all the components of Deep DNAshape. You may incoorporate Deep DNAshape into your pipeline or modify it to fit your needs.
 
+Please also check out our webserver for predicting of DNA shape features in real time, <https://deepdnashape.usc.edu/>.
+
 ## Installation
 
 Prerequsite: `tensorflow >= 2.6.0` `numpy<1.24`
+For tensorflow version >= 2.16, please use keras 2 (see <https://blog.tensorflow.org/2024/03/whats-new-in-tensorflow-216.html>)
+
 ### Download and install through pip
 ```
 git clone https://github.com/JinsenLi/deepDNAshape
